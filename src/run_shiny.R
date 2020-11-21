@@ -5,7 +5,7 @@ run_shiny_front <- function(external_ip,port){
     # Load data sample
     data <- read.csv("src/data.csv")
     
-    options(shiny.host = "0.0.0.0", shiny.port = 8001)
+    options(shiny.host = "35.205.95.105", shiny.port = 3838)
     
     ui <- shinyUI(fluidPage(theme = shinytheme("flatly"),
                       tagList( useShinyjs(),
