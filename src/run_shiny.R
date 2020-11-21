@@ -15,7 +15,7 @@ run_shiny_front <- function(external_ip,port){
     options(shiny.host = "0.0.0.0", shiny.port = 8001)
     
     # Load data sample
-    data <- read.csv("~/OneDrive/Documents/Course/UZH/Fall 2020/Prototyping Data Science Products/front_end/src/data.csv")
+    data <- read.csv("/src/data.csv")
     
     options(shiny.host = "0.0.0.0", shiny.port = 8001)
     
