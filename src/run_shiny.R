@@ -1,4 +1,4 @@
-data <- read.csv("~/OneDrive/Documents/Course/UZH/Fall 2020/Prototyping Data Science Products/front_end/src/data.csv")
+data <- read.csv("/src/data.csv")
 
 run_shiny_front <- function(external_ip,port){
     
