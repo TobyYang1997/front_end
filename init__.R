@@ -25,7 +25,7 @@ library(RPostgres)
 library(RPostgreSQL)
 library(DBI)
 library(dplyr)
-library(plumber)
+#library(plumber)
 
 # running the front-end ---
 run_shiny_front(external_ip, port)
