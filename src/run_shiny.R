@@ -2,18 +2,6 @@ data <- read.csv("src/data.csv")
 
 run_shiny_front <- function(external_ip,port){
     
-    # library(shiny)
-    # library(shinyWidgets)
-    # library(shinythemes)
-    # library(shinyjs)
-    # library(shinyBS)
-    # library(shinycssloaders)
-    # library(shinydashboard)
-    # library(DT)
-    # library(tidyverse)
-    #setwd("~/OneDrive/Documents/Course/UZH/Fall 2020/Prototyping Data Science Products/front_end/src")
-    options(shiny.host = "0.0.0.0", shiny.port = 8001)
-    
     # Load data sample
     data <- read.csv("src/data.csv")
     
