@@ -238,8 +238,7 @@ run_shiny_front <- function(external_ip,port){
                 
                 
                 conn <- dbConnect(
-                    RPostgres::Postgres(),
-                    
+                    drv,
                     dbname = "postgres",
                     host = "34.76.144.177",
                     port = 5432,
@@ -276,7 +275,7 @@ run_shiny_front <- function(external_ip,port){
             
             result_df <- eventReactive(input$search,{
                 
-                drv <- dbDriver("PostgreSQL")
+                #drv <- dbDriver("PostgreSQL")
                 
                 conn <- DBI::dbConnect(
                     drv,
