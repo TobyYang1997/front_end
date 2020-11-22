@@ -7,7 +7,7 @@ run_shiny_front <- function(external_ip,port){
     
     options(shiny.host = "34.76.172.125", shiny.port = 3838)
     
-    ui <- shinyUI(fluidPage(theme = shinytheme("flatly"),
+    ui <- shinyUI(fluidPage(theme = shinythemes::shinytheme("flatly"),
                       tagList( useShinyjs(),
                                navbarPage("Churn Attrition App", id = "navbar",
                                           collapsible = TRUE,
