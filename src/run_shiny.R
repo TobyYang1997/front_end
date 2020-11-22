@@ -279,7 +279,6 @@ run_shiny_front <- function(external_ip,port){
                 drv <- dbDriver("PostgreSQL")
                 
                 conn <- DBI::dbConnect(
-                    RPostgres::Postgres(),
                     drv,
                     dbname = "postgres",
                     host = "34.76.144.177",
