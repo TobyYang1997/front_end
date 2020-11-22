@@ -104,14 +104,15 @@ run_shiny_front <- function(external_ip,port){
                                                                           ))
                                                             ), #column 8 ends
                                                             column(3)),
-                                                   hidden(
+                                                   #hidden(
                                                        div(id = "result_column",
                                                            fluidRow(style = " height:50px;"),
                                                            shiny::hr(),
                                                            fluidRow(column(12, div(#align = "Left",
                                                                h3("Search Result(s)")))),
                                                            fluidRow(shiny::dataTableOutput("request"))
-                                                       )) 
+                                                       )
+                                                       #)  hidden function end
                                           ) # tabPanel query ends
                                ) # navbarpage ends
                       ) # tagsList ends
@@ -300,12 +301,12 @@ text_output <- eventReactive(input$submit, {
                 request_df
             })
             
-            observe({
-                if(length(result_df()) == 0){
-                    hide("result_column")
-                    alert("The customer id is either invalid or does not exit!. Try again...")
-                }else{shinyjs::show("result_column")}
-            })      
+            # observe({
+            #     if(length(result_df()) == 0){
+            #         hide("result_column")
+            #         alert("The customer id is either invalid or does not exit!. Try again...")
+            #     }else{shinyjs::show("result_column")}
+            # })      
             
             output$request <- DT::renderDataTable(result_df(), 
                                                   options = list(searching = FALSE, lengthChange = FALSE)
