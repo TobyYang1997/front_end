@@ -202,7 +202,7 @@ run_shiny_front <- function(external_ip,port){
                 new_data <- paste0('{"new_data":', jsonlite::toJSON(potential), '}', sep = '')
                 class(new_data) <- "json"
                 
-                result <- renderTable({
+                output$text <- renderTable({
                     r <- httr::POST(
                         url = paste0("http://", e, ":", p, "/__swagger__/"),
                         path = "credit_predict",
@@ -247,7 +247,7 @@ run_shiny_front <- function(external_ip,port){
                 
                 IdPlusOne <- sum(dbGetQuery(conn, "SELECT MAX(customer_id) FROM churn_yesno"), 1)
                 
-                result() <- result() %>% 
+                result <- output$text() %>% 
                     rename(no = No, yes = Yes)
                 
                 df_upload <- data.frame("customer_id" = as.integer(IdPlusOne), "credit_score" = input$credit_score,
