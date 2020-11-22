@@ -255,7 +255,8 @@ run_shiny_front <- function(external_ip,port){
                 
                 IdPlusOne <- sum(dbGetQuery(conn, "SELECT MAX(customer_id) FROM churn_yesno"), 1)
                 
-                result <- text_output() %>% 
+                result <- text_output() 
+                result <- result %>% 
                     rename(no = No, yes = Yes)
                 
                 df_upload <- data.frame("customer_id" = as.integer(IdPlusOne), "credit_score" = input$credit_score,
