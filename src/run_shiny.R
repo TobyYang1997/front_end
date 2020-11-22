@@ -110,7 +110,7 @@ run_shiny_front <- function(external_ip,port){
                                                            shiny::hr(),
                                                            fluidRow(column(12, div(#align = "Left",
                                                                h3("Search Result(s)")))),
-                                                           fluidRow(DT::dataTableOutput("requestDT"), hr(), tableOutput("request"))
+                                                           fluidRow(DT::dataTableOutput("requestDT"))
                                                        )
                                                        )  #hidden function end
                                           ) # tabPanel query ends
@@ -308,10 +308,10 @@ text_output <- eventReactive(input$submit, {
                 }else{shinyjs::show("result_column")}
             })
             
-            output$request <- renderTable({
-                #DT::renderDataTable({
-                result_df()#DT::datatable(result_df(), options = list(searching = FALSE, lengthChange = FALSE))
-            })
+            # output$request <- renderTable({
+            #     #DT::renderDataTable({
+            #     result_df()#DT::datatable(result_df(), options = list(searching = FALSE, lengthChange = FALSE))
+            # })
             
             output$requestDT <- DT::renderDataTable({
                 DT::datatable(result_df(), options = list(searching = FALSE, lengthChange = FALSE))
