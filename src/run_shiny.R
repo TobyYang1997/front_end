@@ -202,7 +202,7 @@ run_shiny_front <- function(external_ip,port){
                 new_data <- paste0('{"new_data":', jsonlite::toJSON(potential), '}', sep = '')
                 class(new_data) <- "json"
                 
-                output$text <- renderTable({
+                text_output <- reactive({
                     r <- httr::POST(
                         url = paste0("http://", e, ":", p, "/__swagger__/"),
                         path = "credit_predict",
@@ -211,6 +211,14 @@ run_shiny_front <- function(external_ip,port){
                     )
                     result <- jsonlite::fromJSON(content(r, "text"))
                     
+                })
+                
+                output$text <- renderTable({
+                    #1 try this
+                    text_output()
+                    
+                    #2 Or this if #1 does not come out as a table
+                    #as.dataframe(text_output())
                 })
                 
                 # generate text from result
@@ -247,7 +255,7 @@ run_shiny_front <- function(external_ip,port){
                 
                 IdPlusOne <- sum(dbGetQuery(conn, "SELECT MAX(customer_id) FROM churn_yesno"), 1)
                 
-                result <- output$text() %>% 
+                result <- text_output() %>% 
                     rename(no = No, yes = Yes)
                 
                 df_upload <- data.frame("customer_id" = as.integer(IdPlusOne), "credit_score" = input$credit_score,
