@@ -209,7 +209,7 @@ run_shiny_front <- function(external_ip,port){
                         body = new_data,
                         httr::write_disk("response_potential.json", overwrite = TRUE)
                     )
-                    result <- fromJSON(content(r, "text"))
+                    result <- jsonlite::fromJSON(content(r, "text"))
                     
                 })
                 
