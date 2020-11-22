@@ -271,7 +271,7 @@ text_output <- eventReactive(input$submit, {
                 dbWriteTable(conn, 'potential_customer', df_upload, row.names=FALSE, append=TRUE)
                 
                 #attend to constraints
-                if(IdPlusOne == dbGetQuery(conn, "SELECT MAX(customer_id) FROM churn_yesno")) {
+                if(IdPlusOne == dbGetQuery(conn, "SELECT MAX(potential_customer) FROM churn_yesno")) {
                     sendSweetAlert(session = session,title = "Completed!!", text = "Query Successfully saved to Database",type = "success")
                 }else{
                     sendSweetAlert(session = session,title = "Error!!", text = "Submission Failed. Try again!",type = "success")
