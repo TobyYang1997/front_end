@@ -239,6 +239,7 @@ run_shiny_front <- function(external_ip,port){
                 
                 conn <- dbConnect(
                     RPostgres::Postgres(),
+                    
                     dbname = "postgres",
                     host = "34.76.144.177",
                     port = 5432,
@@ -275,8 +276,11 @@ run_shiny_front <- function(external_ip,port){
             
             result_df <- eventReactive(input$search,{
                 
+                drv <- dbDriver("PostgreSQL")
+                
                 conn <- DBI::dbConnect(
                     RPostgres::Postgres(),
+                    drv,
                     dbname = "postgres",
                     host = "34.76.144.177",
                     port = 5432,
@@ -285,7 +289,7 @@ run_shiny_front <- function(external_ip,port){
                 
                 get_query <- as.numeric(input$get_query)
                 request_df <- data.frame(dbGetQuery(conn, paste0("SELECT * FROM churn_yesno WHERE customer_id = '", get_query ,"'")))
-                
+                dbDisconnect(conn)
             })
             
             observe({
