@@ -35,7 +35,7 @@ run_shiny_front <- function(external_ip,port){
                                                                                       div(
                                                                                           id = "form",
                                                                                           div(align = "center",helpText(h5("Answer the following questions carefully to predict a churn customer"))),
-                                                                                          hr(),
+                                                                                          shiny::hr(),
                                                                                           
                                                                                           div(style="display: inline-block;vertical-align:top;",h5(tags$b("Credit Score:")), selected='mean'),
                                                                                           div(style="display: inline-block;vertical-align:top; width: 60%;",numericInput("credit_score", NULL, max = max(data$credit_score), min = min(data$credit_score), value = 0 )),
@@ -64,14 +64,14 @@ run_shiny_front <- function(external_ip,port){
                                                                                           div(style="display: inline-block;vertical-align:top; width: 55%;",numericInput("balance", NULL, value = 0)),
                                                                                           
                                                                                           prettyRadioButtons( "gender", "Gender",choices = c("Female", "Male"), inline = TRUE,fill = TRUE),
-                                                                                          hr(),
+                                                                                          shiny::hr(),
                                                                                           prettyCheckbox("is_active_member","Is customer an active member?", value = FALSE, icon = icon("check"),animation = "rotate"),
                                                                                           prettyCheckbox("has_card","Does the customer have a card?", value = FALSE, icon = icon("check"), animation = "rotate"),
                                                                                           div( align ="center",actionBttn("submit",label = "Submit",style = "gradient", icon = icon("thumbs-up")))
                                                                                       )),
                                                                                   bsModal(id = "result", title = "Prediction Result for", trigger = "submit", 
                                                                                           size = "medium", div(align ="center",withSpinner(textOutput("note"), type = 0)), br(),
-                                                                                          div(align="center", withSpinner(tableOutput("text")), hr(),  div(align = "center", actionLink("save_btn", "Save to potential customers list",icon = icon("upload"))))
+                                                                                          div(align="center", withSpinner(tableOutput("text")), shiny::hr(),  div(align = "center", actionLink("save_btn", "Save to potential customers list",icon = icon("upload"))))
                                                                                   ) # bsmodal ends
                                                                                   
                                                                               )),
@@ -86,7 +86,7 @@ run_shiny_front <- function(external_ip,port){
                                                                           div(class="panel-body",style = "background-color:	#d8d8d8;",
                                                                               tags$style(".selectize-input {min-height: 38px;}"),
                                                                               div(align = "center",helpText(h5("Enter a valid customer Id to get result"))),
-                                                                              hr(),
+                                                                              shiny::hr(),
                                                                               selectizeInput(
                                                                                   inputId = "get_query",
                                                                                   label = NULL,
@@ -107,7 +107,7 @@ run_shiny_front <- function(external_ip,port){
                                                    hidden(
                                                        div(id = "result_column",
                                                            fluidRow(style = " height:50px;"),
-                                                           hr(),
+                                                           shiny::hr(),
                                                            fluidRow(column(12, div(#align = "Left",
                                                                h3("Search Result(s)")))),
                                                            fluidRow(DT::dataTableOutput("request"))
