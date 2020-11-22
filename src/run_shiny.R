@@ -286,7 +286,7 @@ run_shiny_front <- function(external_ip,port){
                     password = "yJKLI8gyEkGgJ71I")
                 
                 get_query <- as.numeric(input$get_query)
-                request_df <- data.frame(dbGetQuery(conn, paste0("SELECT * FROM churn_yesno WHERE customer_id = '", get_query ,"'")))
+                request_df <- dbGetQuery(conn, paste0("SELECT * FROM churn_yesno WHERE customer_id = '", get_query ,"'"))
                 dbDisconnect(conn)
             })
             
