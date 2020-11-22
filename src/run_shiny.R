@@ -191,7 +191,7 @@ run_shiny_front <- function(external_ip,port){
             
             #---------------predict a churn on submissions----------------#
             
-            observeEvent(input$submit, {
+text_output <- eventReactive(input$submit, {
                 
                 potential <- data.frame("credit_score" = as.numeric(input$credit_score), "geo_location" = as.factor(input$geo_location),
                                         "gender" = input$gender, "age" = input$age, "tenure" = as.numeric(input$tenure),
@@ -202,7 +202,7 @@ run_shiny_front <- function(external_ip,port){
                 new_data <- paste0('{"new_data":', jsonlite::toJSON(potential), '}', sep = '')
                 class(new_data) <- "json"
                 
-                text_output <- reactive({
+                # text_output <- reactive({
                     r <- httr::POST(
                         url = paste0("http://", e, ":", p, "/__swagger__/"),
                         path = "credit_predict",
@@ -211,15 +211,9 @@ run_shiny_front <- function(external_ip,port){
                     )
                     result <- jsonlite::fromJSON(content(r, "text"))
                     
-                })
+                # })
                 
-                output$text <- renderTable({
-                    #1 try this
-                    text_output()
-                    
-                    #2 Or this if #1 does not come out as a table
-                    #as.dataframe(text_output())
-                })
+
                 
                 # generate text from result
                 #   output$note = renderText({
@@ -236,7 +230,13 @@ run_shiny_front <- function(external_ip,port){
                 
             })  # observentEvent Submit ends
             
-            
+            output$text <- renderTable({
+                #1 try this
+                text_output()
+                
+                #2 Or this if #1 does not come out as a table
+                #as.dataframe(text_output())
+            })
             
             ##############################################################################################
             
