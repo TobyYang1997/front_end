@@ -110,7 +110,7 @@ run_shiny_front <- function(external_ip,port){
                                                            shiny::hr(),
                                                            fluidRow(column(12, div(#align = "Left",
                                                                h3("Search Result(s)")))),
-                                                           fluidRow(DT::dataTableOutput("request"))
+                                                           fluidRow(shiny::dataTableOutput("request"))
                                                        )) 
                                           ) # tabPanel query ends
                                ) # navbarpage ends
