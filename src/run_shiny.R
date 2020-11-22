@@ -275,7 +275,7 @@ run_shiny_front <- function(external_ip,port){
             
             result_df <- eventReactive(input$search,{
                 
-                #drv <- dbDriver("PostgreSQL")
+                drv <- dbDriver("PostgreSQL")
                 
                 conn <- DBI::dbConnect(
                     drv,
@@ -288,6 +288,7 @@ run_shiny_front <- function(external_ip,port){
                 get_query <- as.numeric(input$get_query)
                 request_df <- dbGetQuery(conn, paste0("SELECT * FROM churn_yesno WHERE customer_id = '", get_query ,"'"))
                 dbDisconnect(conn)
+                request_df
             })
             
             observe({
