@@ -116,7 +116,7 @@ run_shiny_front <- function(external_ip,port){
                                           ) # tabPanel query ends
                                ) # navbarpage ends
                       ) # tagsList ends
-    ) # fluidpage ends
+     ) # fluidpage ends
     ) # shinyUI ends
     
     
@@ -130,21 +130,31 @@ run_shiny_front <- function(external_ip,port){
             drv <- dbDriver("PostgreSQL")
             
             
-            # functions
+#------------------------------------------------------functions-------------------------------------------#
             
-            zero_one <-
-                function(x) {
-                    # To convert a Logic input to 1 (if TRUE) or 0 (if FALSE)
-                    if (x == TRUE) {
-                        return(x = 1)
-                    } else {
-                        return(x = 0)
-                    }
+zero_one <-function(x) {# To convert a Logic input to 1 (if TRUE) or 0 (if FALSE)
+            if (x == TRUE) {
+              return(x = 1)
+            }else {
+              return(x = 0)
+            }
+          }
+ 
+churn_value <- function(x){ # returns the column name with the highest value in uppercase 
+                if (x[,1] > x[,2]){
+                  df <- x[1]
+                }else{
+                  df <- x[2]
                 }
+                value <- df%>%colnames()%>%toupper()
+                return(value)
+              }           
+
+
+`%notin%` <- Negate(`%in%`) # a not in function
+ 
             
-            `%notin%` <- Negate(`%in%`)
-            
-            #---------------set constraints----------------#
+#--------------------------------------------set constraints-------------------------------------------------------------#
             observe({
                 # constrain age
                 if (input$age < 18 || input$age > 120 || is.na(input$age))
@@ -190,7 +200,7 @@ run_shiny_front <- function(external_ip,port){
                 }
             })
             
-            #---------------predict a churn on submissions----------------#
+#--------------------------------------------------predict a churn on submissions----------------------------------------#
             
 text_output <- eventReactive(input$submit, {
                 
@@ -213,38 +223,32 @@ text_output <- eventReactive(input$submit, {
                     result <- jsonlite::fromJSON(content(r, "text"))
                     
                 # })
-                
-
-                
-                
-                
+  
                 # create a table from result
                 #     output$text = renderTable({ Output }) #output$text ends
                 
                 
             })  # observentEvent Submit ends
                 
-# generate text from result
-           output$note = renderText({
+#------------------------------------------- generate text and table from result----------------------------------#
+           
+output$note = renderText({ # create a text result
                Output <- text_output()
-                    paste0("The predicted result for this potential customer is ",toupper(Output[,1]), " to churn", ". The table below gives further details:")
+               paste0("The predicted result for this potential customer is a ",churn_value(Output), " TO CHURN. The table below gives further details:")
+                    #paste0("The predicted result for this potential customer is ",toupper(Output[,1]), " to churn", ". The table below gives further details:")
+              
+               })
 
-          })
-
-            output$text <- renderTable({
-                #1 try this
-                text_output()
-                
-                #2 Or this if #1 does not come out as a table
-                #as.dataframe(text_output())
-            })
+output$text <- renderTable({ # create a table result
+               text_output()  
+               })
             
-            ##############################################################################################
             
-            observeEvent(input$save_btn,{
+#----------------------------------------- option to save predicted to potential_customer db----------------------#
+            
+observeEvent(input$save_btn,{
                 
                 disable("save_btn")
-                
                 
                 conn <- dbConnect(
                     drv,
@@ -275,13 +279,13 @@ text_output <- eventReactive(input$submit, {
                 if(IdPlusOne == dbGetQuery(conn, "SELECT MAX(customer_id) FROM potential_customer")) {
                     sendSweetAlert(session = session,title = "Completed!!", text = "Query Successfully saved to Database",type = "success")
                 }else{
-                    sendSweetAlert(session = session,title = "Error!!", text = "Submission Failed. Try again!",type = "success")
+                    sendSweetAlert(session = session,title = "Error!!", text = "Submission Failed. Try again!",type = "error")
                 }
                 
                 reset("form")
-            })
+          })
             
-            ##########################################################################################
+#--------------------------------get exist customer info from database by search via customer_id--------------------------------------#
             
             result_df <- eventReactive(input$search,{
                 
@@ -304,7 +308,8 @@ text_output <- eventReactive(input$submit, {
             observe({
                 if(length(result_df()) == 0){
                     hide("result_column")
-                    alert("The customer id is either invalid or does not exit!. Try again...")
+                    sendSweetAlert(session = session,title = "Oops!!", text = "The customer id provided is either invalid or does not exit!. Try again...",type = "warning")
+                    #alert("The customer id is either invalid or does not exit!. Try again...")
                 }else{shinyjs::show("result_column")}
             })
             
@@ -318,8 +323,8 @@ text_output <- eventReactive(input$submit, {
             })
             
             
-        }) # shinyServer function ends
+}) # shinyServer function ends
     
-    
-    shinyApp(ui, server)
+ shinyApp(ui, server) #unite ui and server function to create a shiny app
+ 
 }
