@@ -60,7 +60,7 @@ run_shiny_front <- function(external_ip,port){
                                                                                           div(style="display: inline-block;vertical-align:top;",h5(tags$b("Enter the customer's annual income:")), selected='mean'),
                                                                                           div(style="display: inline-block;vertical-align:top; width: 60%;",numericInput("est_salary", NULL, value = 0)), tags$br(),
                                                                                           
-                                                                                          div(style="display: inline-block;vertical-align:top;",h5(tags$b("What is the current balance:")), selected='mean'),
+                                                                                          div(style="display: inline-block;vertical-align:top;",h5(tags$b("What is the current balance:")), selected='mean'), tags$br(),
                                                                                           div(style="display: inline-block;vertical-align:top; width: 55%;",numericInput("balance", NULL, value = 0)),
                                                                                           
                                                                                           prettyRadioButtons( "gender", "Gender",choices = c("Female", "Male"), inline = TRUE,fill = TRUE),
