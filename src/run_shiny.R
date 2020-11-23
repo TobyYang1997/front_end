@@ -58,7 +58,7 @@ run_shiny_front <- function(external_ip,port){
                                                                                           sliderInput("num_products", "How many product(s) does the customer have?", 1, max = max(data$num_products), 2, 1),
                                                                                           
                                                                                           div(style="display: inline-block;vertical-align:top;",h5(tags$b("Enter the customer's annual income:")), selected='mean'),
-                                                                                          div(style="display: inline-block;vertical-align:top; width: 60%;",numericInput("est_salary", NULL, value = 0)),
+                                                                                          div(style="display: inline-block;vertical-align:top; width: 60%;",numericInput("est_salary", NULL, value = 0)), tags$br(),
                                                                                           
                                                                                           div(style="display: inline-block;vertical-align:top;",h5(tags$b("What is the current balance:")), selected='mean'),
                                                                                           div(style="display: inline-block;vertical-align:top; width: 55%;",numericInput("balance", NULL, value = 0)),
@@ -227,7 +227,7 @@ text_output <- eventReactive(input$submit, {
 # generate text from result
            output$note = renderText({
                Output <- text_output()
-                    paste0("The predicted result for this potential Customer is ",toupper(Output[,1]), " TO CHURN ", ". The table below gives further details:")
+                    paste0("The predicted result for this potential customer is ",toupper(Output[,1]), " to churn", ". The table below gives further details:")
 
           })
 
