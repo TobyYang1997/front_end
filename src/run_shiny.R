@@ -216,21 +216,21 @@ text_output <- eventReactive(input$submit, {
                 
 
                 
-                # generate text from result
-                #   output$note = renderText({
-                #paste0("The predicted result for Customer ",customer_id, " is ", pred)
-                #paste0("The probability scores for ",customer_id, ": CHURN at ", as.character(Output[3]*100),"%")
-                #     paste0(toupper(Output[,1]),". The probability for customer ",input$customer_id, ": CHURN at ", as.character(Output[3]*100),"%,", " NOT CHURN at ",as.character(Output[2]*100),"%.")
-                #Output
                 
-                #    })
                 
                 # create a table from result
                 #     output$text = renderTable({ Output }) #output$text ends
                 
                 
             })  # observentEvent Submit ends
-            
+                
+# generate text from result
+           output$note = renderText({
+               Output <- text_output()
+                    paste0("The predicted result for this potential Customer is ",toupper(Output[,1]), " TO CHURN ", ". The table below gives further details:")
+
+          })
+
             output$text <- renderTable({
                 #1 try this
                 text_output()
