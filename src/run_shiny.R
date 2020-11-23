@@ -9,7 +9,7 @@ run_shiny_front <- function(external_ip,port){
     
     ui <- shinyUI(fluidPage(theme = shinythemes::shinytheme("flatly"),
                       tagList( useShinyjs(),
-                               navbarPage("Churn Attrition App", id = "navbar",
+                               navbarPage("Churn Risk Accessment App", id = "navbar",
                                           collapsible = TRUE,
                                           position = "fixed-top",
                                           windowTitle = "Churn-Prediction",
@@ -25,7 +25,7 @@ run_shiny_front <- function(external_ip,port){
                                           ), #tabPanel Dasboard ends
                                           tabPanel("Prediction",
                                                    fluidRow(column(12, #style = "background-color:	#d8d8d8;",
-                                                                   div(align = "center", h2("Predict a Churn")),
+                                                                   div(align = "center", h2("Predict the customer's churn probability")),
                                                                    #fluidRow(style = " height:350px;"),
                                                                    fluidRow( 
                                                                        column(4),
@@ -34,14 +34,14 @@ run_shiny_front <- function(external_ip,port){
                                                                                   div(class="panel-body",style = "background-color:	#d8d8d8;",
                                                                                       div(
                                                                                           id = "form",
-                                                                                          div(align = "center",helpText(h5("Answer the following questions carefully to predict a churn customer"))),
+                                                                                          div(align = "center",helpText(h5("Answer the following questions carefully to predict churn probability of the customer"))),
                                                                                           shiny::hr(),
                                                                                           
                                                                                           div(style="display: inline-block;vertical-align:top;",h5(tags$b("Credit Score:")), selected='mean'),
                                                                                           div(style="display: inline-block;vertical-align:top; width: 60%;",numericInput("credit_score", NULL, max = max(data$credit_score), min = min(data$credit_score), value = 0 )),
                                                                                           tags$br(),
                                                                                           
-                                                                                          sliderInput("tenure", "What is the Customer's tenure:",1, max = max(data$tenure), 2, 1),
+                                                                                          sliderInput("tenure", "What is the customer's tenure:",1, max = max(data$tenure), 2, 1),
                                                                                           
                                                                                           
                                                                                           
@@ -55,9 +55,9 @@ run_shiny_front <- function(external_ip,port){
                                                                                           
                                                                                           
                                                                                           
-                                                                                          sliderInput("num_products", "How many product does the customer have?", 1, max = max(data$num_products), 2, 1),
+                                                                                          sliderInput("num_products", "How many product(s) does the customer have?", 1, max = max(data$num_products), 2, 1),
                                                                                           
-                                                                                          div(style="display: inline-block;vertical-align:top;",h5(tags$b("Enter customer's salary:")), selected='mean'),
+                                                                                          div(style="display: inline-block;vertical-align:top;",h5(tags$b("Enter the customer's annual income:")), selected='mean'),
                                                                                           div(style="display: inline-block;vertical-align:top; width: 60%;",numericInput("est_salary", NULL, value = 0)),
                                                                                           
                                                                                           div(style="display: inline-block;vertical-align:top;",h5(tags$b("What is the current balance:")), selected='mean'),
@@ -65,7 +65,7 @@ run_shiny_front <- function(external_ip,port){
                                                                                           
                                                                                           prettyRadioButtons( "gender", "Gender",choices = c("Female", "Male"), inline = TRUE,fill = TRUE),
                                                                                           shiny::hr(),
-                                                                                          prettyCheckbox("is_active_member","Is customer an active member?", value = FALSE, icon = icon("check"),animation = "rotate"),
+                                                                                          prettyCheckbox("is_active_member","Is the customer an active member?", value = FALSE, icon = icon("check"),animation = "rotate"),
                                                                                           prettyCheckbox("has_card","Does the customer have a card?", value = FALSE, icon = icon("check"), animation = "rotate"),
                                                                                           div( align ="center",actionBttn("submit",label = "Submit",style = "gradient", icon = icon("thumbs-up")))
                                                                                       )),
@@ -80,12 +80,12 @@ run_shiny_front <- function(external_ip,port){
                                                    ))
                                           ), # tabpanel for predictionpage ends
                                           tabPanel("Query",
-                                                   fluidRow(column(12,div(align = "center", h2("Query Database")))),
+                                                   fluidRow(column(12,div(align = "center", h2("Query Customer Information Database")))),
                                                    fluidRow(column(3),
                                                             column(6, div(class="panel panel-default",
                                                                           div(class="panel-body",style = "background-color:	#d8d8d8;",
                                                                               tags$style(".selectize-input {min-height: 38px;}"),
-                                                                              div(align = "center",helpText(h5("Enter a valid customer Id to get result"))),
+                                                                              div(align = "center",helpText(h5("Enter a valid customer ID to get result"))),
                                                                               shiny::hr(),
                                                                               selectizeInput(
                                                                                   inputId = "get_query",
@@ -94,7 +94,7 @@ run_shiny_front <- function(external_ip,port){
                                                                                   choices = NULL,
                                                                                   options = list(
                                                                                       create = TRUE,
-                                                                                      placeholder = "search by Customer ID...",
+                                                                                      placeholder = "search by customer ID...",
                                                                                       onInitialize = I('function() {this.setValue(""); }'),
                                                                                       size = 5)),
                                                                               div(align ="center", 
