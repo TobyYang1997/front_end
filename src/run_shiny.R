@@ -87,16 +87,11 @@ run_shiny_front <- function(external_ip,port){
                                                                               tags$style(".selectize-input {min-height: 38px;}"),
                                                                               div(align = "center",helpText(h5("Enter a valid customer ID to get result"))),
                                                                               shiny::hr(),
-                                                                              selectizeInput(
+                                                                              numericInput(
                                                                                   inputId = "get_query",
-                                                                                  label = NULL,
-                                                                                  width = "100%",
-                                                                                  choices = NULL,
-                                                                                  options = list(
-                                                                                      create = TRUE,
-                                                                                      placeholder = "search by customer ID...",
-                                                                                      onInitialize = I('function() {this.setValue(""); }'),
-                                                                                      size = 5)),
+                                                                                  label = "search by customer ID...",
+                                                                                  value = NA,
+                                                                                  width = "100%"),
                                                                               div(align ="center", 
                                                                                   actionBttn("search","Request",color="primary",style ="jelly",icon =icon("search"))
                                                                               )
@@ -160,8 +155,8 @@ churn_value <- function(x){ # returns the column name with the highest value in 
                 if (input$age < 18 || input$age > 120 || is.na(input$age))
                     showModal(
                         modalDialog(
-                            title = "WARNING!",
-                            "The age value entered is oustside the specified range. Please enter a value between 18-120 years",
+                            title = "Warning!",
+                            "The age entered is oustside the specified range. Please enter a value between 18-120 years",
                             easyClose = TRUE
                         )
                     )
@@ -317,7 +312,7 @@ observeEvent(input$save_btn,{
             observe({
                 if(length(result_df()) == 0){
                     hide("result_column")
-                    sendSweetAlert(session = session,title = "Oops!!", text = "The customer id provided is either invalid or does not exit!. Try again...",type = "warning")
+                    sendSweetAlert(session = session,title = "Oops!!", text = "The customer ID provided is either invalid or does not exit! Try again",type = "warning")
                     #alert("The customer id is either invalid or does not exit!. Try again...")
                 }else{shinyjs::show("result_column")}
             })
