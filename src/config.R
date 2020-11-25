@@ -2,7 +2,7 @@
 # Author: Yili Yang, Olajoke Oladipo, Wenxi Feng
 # Project: Prototyping Data Science Products
 # File: init__.R
-# Description: project initialisation
+# Description: define external ip and port
 ###################################################################################################
 # Input: 
 # Output: main inputs to be used in GLOBAL.env
