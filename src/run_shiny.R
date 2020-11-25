@@ -200,6 +200,15 @@ churn_value <- function(x){ # returns the column name with the highest value in 
                 }
             })
             
+            observe({
+              if (class(input$get_query) %notin% c("integer")) {
+                disable("search")
+              } else {
+                enable("search")
+              }
+            })
+            
+            
 #--------------------------------------------------predict a churn on submissions----------------------------------------#
             
 text_output <- eventReactive(input$submit, {
